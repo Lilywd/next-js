@@ -1,29 +1,30 @@
 name: Nextjs CI/CD pipeline
 
-on:  
+on: 
   push:
-  pull_request:
-    branches:
-      - main
+    branches: [main]
 
 jobs:
-  build-project:
+  build-admin:
+
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
-      - uses: actions/checkout@v2
-      - name: Install dependencies
+        uses: actions/checkout@v2
+      - name: Install NPM dependencies
         working-directory: ./admin
         run: npm install
       - name: Build and Export
-       run: npm run generate
-  build-project:
+        run: npm run generate
+
+  build-shop:
+
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
-      - uses: actions/checkout@v2
-      - name: Install dependencies
+        uses: actions/checkout@v2
+      - name: Install NPM dependencies
         working-directory: ./shop
         run: npm install
       - name: Build and Export
-       run: npm run generate
+        run: npm run generate
