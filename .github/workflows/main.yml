@@ -14,8 +14,10 @@ jobs:
         node-version: 12
     - name: Install Dependencies 
       working-directory: ./admin
-    - run: npm ci
-    - run: npm run build
+      run: npm ci
+    - name: Run build
+      working-directory: ./admin
+      run: npm run build
     #  - name: Checkout Code
     #    uses: actions/checkout@v2
      # - name: Install NPM dependencies
