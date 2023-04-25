@@ -9,14 +9,20 @@ jobs:
 
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v2
-      - name: Install NPM dependencies
-        working-directory: ./admin
-        run: npm i
-      - name: Build and Export
-        working-directory: ./admin
-        run: npm run generate
+    - uses: actions/setup-node@v1
+      with:
+        node-version: 12
+    - run: npm ci
+    - run: npm run build
+    #  - name: Checkout Code
+    #    uses: actions/checkout@v2
+     # - name: Install NPM dependencies
+      #  working-directory: ./admin
+      #  run: npm i
+      #- name: Build and Export
+      #  working-directory: ./admin
+      #  run: npm run generate
+      
         
         
   
