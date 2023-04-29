@@ -1,5 +1,6 @@
 {
   "name": "shop",
+  "homepage": "www.lehky.co",
   "version": "0.1.0",
   "private": true,
   "scripts": {
