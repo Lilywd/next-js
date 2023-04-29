@@ -41,48 +41,58 @@ jobs:
   build-admin:
 
     needs: test-admin
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Docker login
-        env:
-          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME}}
-          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD}}
-        run: |
 
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - uses: actions/checkout@v2
+
+      - name: Docker login
+
+        env:
+
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME}}
+
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD}}
+
+        run: |
           docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
       - name: docker build user
+
         run: |
           docker build ./admin -t lilywd/ecommerce:1.0.0
       - name: docker push 
-      run: |
-        docker push lilywd/ecommerce:1.0.0
-      
 
-  build-shop:
+        run: |
+          docker push lilywd/ecommerce:1.0.0
+  build-admin:
 
     needs: test-shop
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - name: Docker login
-        env:
-          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME}}
-          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD}}
-        run: |
 
+    runs-on: ubuntu-latest
+
+    steps:
+
+      - uses: actions/checkout@v2
+
+      - name: Docker login
+
+        env:
+
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME}}
+
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD}}
+
+        run: |
           docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
       - name: docker build user
+
         run: |
           docker build ./admin -t lilywd/ecommerce:2.0.0
       - name: docker push 
-      run: |
-        docker push lilywd/ecommerce:2.0.0
-      
-      
-        
-    
-    
-    
-        
 
+        run: |
+          docker push lilywd/ecommerce:2.0.0
+
+      
