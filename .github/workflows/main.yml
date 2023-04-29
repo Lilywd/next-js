@@ -5,26 +5,84 @@ on:
     branches: [main]
 
 jobs:
-  build-:
+
+  test-admin:
 
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v2
-      - name: Install NPM dependencies
-        working-directory: ./admin
-        run: npm install
-      - name: Build and Export
-        run: npm run generate
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
+      with:
+           node-version: 16
+
+    - name: Install Dependencies 
+      working-directory: ./admin
+      run: npm ci
+    - name: Run build
+      working-directory: ./admin
+      run: npm run build
+  
+  test-shop:
+
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
+      with:
+          node-version: 16
+    - name: Install Dependencies 
+      working-directory: ./shop
+      run: npm ci
+    - name: Run build
+      working-directory: ./shop
+      run: npm run build
+      
+   
+  build-admin:
+
+    needs: test-admin
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Docker login
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME}}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD}}
+        run: |
+
+          docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+      - name: docker build user
+        run: |
+          docker build ./admin -t lilywd/ecommerce:1.0.0
+      - name: docker push 
+      run: |
+        docker push lilywd/ecommerce:1.0.0
+      
 
   build-shop:
 
+    needs: test-shop
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v2
-      - name: Install NPM dependencies
-        working-directory: ./shop
-        run: npm install
-      - name: Build and Export
-        run: npm run generate
+      - uses: actions/checkout@v2
+      - name: Docker login
+        env:
+          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME}}
+          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD}}
+        run: |
+
+          docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD
+      - name: docker build user
+        run: |
+          docker build ./admin -t lilywd/ecommerce:2.0.0
+      - name: docker push 
+      run: |
+        docker push lilywd/ecommerce:2.0.0
+      
+      
+        
+    
+    
+    
+        
+
