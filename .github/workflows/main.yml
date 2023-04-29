@@ -20,14 +20,24 @@ jobs:
     - name: Run build
       working-directory: ./admin
       run: npm run build
-    #  - name: Checkout Code
-    #    uses: actions/checkout@v2
-     # - name: Install NPM dependencies
-      #  working-directory: ./admin
-      #  run: npm i
-      #- name: Build and Export
-      #  working-directory: ./admin
-      #  run: npm run generate
+  
+  build-shop:
+
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - uses: actions/setup-node@v3
+      with:
+          node-version: 16
+    - name: Install Dependencies 
+      working-directory: ./shop
+      run: npm ci
+    - name: Run build
+      working-directory: ./shop
+      run: npm run build
+      
+   
+      
       
         
     
